@@ -354,7 +354,7 @@ function debugLogger(namespace) {
       
       // IE and edge do not support colors
       if (checkBrowser.isIE()) levelLog(levels[levelName].prefix + message + inspections);
-      else if (isValidBrowser) levelLog('%c' + levels[levelName].prefix, logger[levelName].color, message + inspections);
+      else if (isValidBrowser) levelLog(levels[levelName].prefix + message + inspections);
       else levelLog(logger[levelName].color + levels[levelName].prefix + logger[levelName].reset + message + inspections);
     };
 
