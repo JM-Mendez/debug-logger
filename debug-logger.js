@@ -2,7 +2,7 @@
 
 var util = require('util'),
     vmDebug = require('debug'),
-    streamSpy = require('./stream-spy');
+    streamSpy = require('./stream-spy'),
     checkBrowser = require('./checkBrowser');
 
 exports = module.exports = debugLogger;
