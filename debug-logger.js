@@ -3,6 +3,7 @@
 var util = require('util'),
     vmDebug = require('debug'),
     streamSpy = require('./stream-spy');
+    checkBrowser = require('./checkBrowser');
 
 exports = module.exports = debugLogger;
 exports.debug = vmDebug;
@@ -341,7 +342,10 @@ function debugLogger(namespace) {
         }
       };
       
-      levelLog(logger[levelName].color + levels[levelName].prefix + logger[levelName].reset + message + inspections);
+      // IE and edge do not support colors
+      if (checkBrowser.isIE) levelLog(levels[levelName].prefix + message + inspections);
+      else if (checkBrowser.isValidBrowser) levelLog('%c' + levels[levelName].prefix, logger[levelName].color, message + inspections);
+      else levelLog(logger[levelName].color + levels[levelName].prefix + logger[levelName].reset + message + inspections);
     };
 
     function logNewlineFn() {
