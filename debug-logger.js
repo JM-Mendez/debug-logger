@@ -26,16 +26,7 @@ exports.config = function config(options){
 
 exports.inspectOptions = {};
 
-exports.colors = isValidBrowser ? {
-  black :   '#000000',
-  red :     '#FF0000',
-  green :   '#008000',
-  yellow :  '#FFFF00',
-  blue :    '#0000FF',
-  magenta : '#FF00FF',
-  cyan :    '#00FFFF',
-  white :   '#FFFFFF'
-} : {
+exports.colors = {
   black :   0,
   red :     1,
   green :   2,
@@ -341,22 +332,22 @@ function debugLogger(namespace) {
       
       var i, param;
       var n = 1;
-      for(i=0; i<errorStrings.length; i++){
-        param = errorStrings[i];
-        message += i === 0 ? param[0] : ' ' + param[0];
-        if (param.length > 1) {
-          var highlightStack = param[1].indexOf('Stack') >= 0 ? logger[levelName].color : '';
+      if (isValidBrowser) levelLog(message + inspections);
+      else {
+        for (i = 0; i < errorStrings.length; i++) {
+          param = errorStrings[i];
+          message += i === 0 ? param[0] : " " + param[0];
+          if (param.length > 1) {
+            var highlightStack = param[1].indexOf("Stack") >= 0 ? logger[levelName].color : "";
           inspections += '\n' +
             logger[levelName].inspectionHighlight + '___' + param[1] + ' #' + n++ + '___' + logger[levelName].reset +'\n' +
             highlightStack + param[2] + logger[levelName].reset;
+          }
         }
-      };
-      
-      // IE and edge do not support colors
-      if (checkBrowser.isIE()) levelLog(levels[levelName].prefix + message + inspections);
-      else if (isValidBrowser) levelLog(levels[levelName].prefix + message + inspections);
-      else levelLog(logger[levelName].color + levels[levelName].prefix + logger[levelName].reset + message + inspections);
-    };
+
+        levelLog(logger[levelName].color + levels[levelName].prefix + logger[levelName].reset + message + inspections);
+      }
+    }
 
     function logNewlineFn() {
       if (streamSpy.lastCharacter !== '\n') {
