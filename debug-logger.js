@@ -8,6 +8,7 @@ var util = require('util'),
 exports = module.exports = debugLogger;
 exports.debug = vmDebug;
 var debugInstances = exports.debugInstances = {};
+var isValidBrowser = checkBrowser.isValidBrowser()
 
 exports.config = function config(options){
   options = options || {};
@@ -25,7 +26,16 @@ exports.config = function config(options){
 
 exports.inspectOptions = {};
 
-exports.colors = {
+exports.colors = isValidBrowser ? {
+  black :   '#000000',
+  red :     '#FF0000',
+  green :   '#008000',
+  yellow :  '#FFFF00',
+  blue :    '#0000FF',
+  magenta : '#FF00FF',
+  cyan :    '#00FFFF',
+  white :   '#FFFFFF'
+} : {
   black :   0,
   red :     1,
   green :   2,
@@ -344,7 +354,7 @@ function debugLogger(namespace) {
       
       // IE and edge do not support colors
       if (checkBrowser.isIE()) levelLog(levels[levelName].prefix + message + inspections);
-      else if (checkBrowser.isValidBrowser()) levelLog('%c' + levels[levelName].prefix, logger[levelName].color, message + inspections);
+      else if (isValidBrowser) levelLog('%c' + levels[levelName].prefix, logger[levelName].color, message + inspections);
       else levelLog(logger[levelName].color + levels[levelName].prefix + logger[levelName].reset + message + inspections);
     };
 
