@@ -8,7 +8,7 @@ var util = require('util'),
 exports = module.exports = debugLogger;
 exports.debug = vmDebug;
 var debugInstances = exports.debugInstances = {};
-var isValidBrowser = checkBrowser.isValidBrowser()
+var isValidBrowser = !!checkBrowser.isValidBrowser()
 
 exports.config = function config(options){
   options = options || {};
