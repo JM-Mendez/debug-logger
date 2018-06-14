@@ -152,10 +152,10 @@ function merge(object, source){
 }
 
 function getLogLevel(namespace) {
-  if(!process.env.DEBUG_LEVEL) {
+  if(!process.env.DEBUG_LEVEL || !process.env.REACT_APP_DEBUG_LEVEL) {
     return 0;
   }
-  var debugLevel = process.env.DEBUG_LEVEL.toLowerCase();
+  var debugLevel = process.env.DEBUG_LEVEL.toLowerCase() || process.env.REACT_APP_DEBUG_LEVEL.toLowerCase();
   if(debugLevel.indexOf('*:') === 0){
     return hasLogLevel(debugLevel.slice(2)) || 0;
   }
