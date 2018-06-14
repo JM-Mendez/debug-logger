@@ -21,6 +21,7 @@ exports.isValidBrowser = function isValidBrowser() {
 exports.isIE = function isIE(){
   // Internet Explorer and Edge do not support colors.
   if (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/(edge|trident)\/(\d+)/)) {
-    return false;
+    return true;
   }
+  return false
 }
